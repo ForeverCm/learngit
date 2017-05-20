@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+  <display-name></display-name>	
+  <welcome-file-list>
+    <welcome-file>login.jsp</welcome-file>
+  </welcome-file-list>
+  
+   <filter>
+  	<filter-name>struts2</filter-name>
+  	<filter-class>
+  		org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter
+  	</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>struts2</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+   <servlet-mapping>
+    <servlet-name>DeleteSeatServlet</servlet-name>
+    <url-pattern>/DeleteSeatServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>DeleteSeatServlet</servlet-name>
+    <servlet-class>com.f313.servlet.DeleteSeatServlet</servlet-class>
+  </servlet>
+  
+   <servlet-mapping>
+    <servlet-name>BookSeatServlet</servlet-name>
+    <url-pattern>/BookSeatServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>BookSeatServlet</servlet-name>
+    <servlet-class>com.f313.servlet.BookSeatServlet</servlet-class>
+  </servlet>
+  
+   <servlet-mapping>
+    <servlet-name>CheckSeatServlet</servlet-name>
+    <url-pattern>/CheckSeatServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>CheckSeatServlet</servlet-name>
+    <servlet-class>com.f313.servlet.CheckSeatServlet</servlet-class>
+  </servlet>
+  
+ <servlet-mapping>
+    <servlet-name>AllSeatServlet</servlet-name>
+    <url-pattern>/AllSeatServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AllSeatServlet</servlet-name>
+    <servlet-class>com.f313.servlet.AllSeatServlet</servlet-class>
+  </servlet>
+ 
+ <servlet-mapping>
+    <servlet-name>DeleteFlightServlet</servlet-name>
+    <url-pattern>/DeleteFlightServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>DeleteFlightServlet</servlet-name>
+    <servlet-class>com.f313.servlet.DeleteFlightServlet</servlet-class>
+  </servlet>
+ 
+   <servlet-mapping>
+    <servlet-name>AddFlightServlet</servlet-name>
+    <url-pattern>/AddFlightServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AddFlightServlet</servlet-name>
+    <servlet-class>com.f313.servlet.AddFlightServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>CheckFlightServlet</servlet-name>
+    <url-pattern>/CheckFlightServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>CheckFlightServlet</servlet-name>
+    <servlet-class>com.f313.servlet.CheckFlightServlet</servlet-class>
+  </servlet>
+ 
+  <servlet-mapping>
+    <servlet-name>DeleteUserServlet</servlet-name>
+    <url-pattern>/DeleteUserServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>DeleteUserServlet</servlet-name>
+    <servlet-class>com.f313.servlet.DeleteUserServlet</servlet-class>
+  </servlet>
+ 
+ 
+  <servlet-mapping>
+    <servlet-name>AllUserServlet</servlet-name>
+    <url-pattern>/AllUserServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AllUserServlet</servlet-name>
+    <servlet-class>com.f313.servlet.AllUserServlet</servlet-class>
+  </servlet>
+ 
+  <servlet-mapping>
+    <servlet-name>RegisterServlet</servlet-name>
+    <url-pattern>/RegisterServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>RegisterServlet</servlet-name>
+    <servlet-class>com.f313.servlet.RegisterServlet</servlet-class>
+  </servlet>
+ 
+ <servlet-mapping>
+    <servlet-name>LoginServlet</servlet-name>
+    <url-pattern>/LoginServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>LoginServlet</servlet-name>
+    <servlet-class>com.f313.servlet.LoginServlet</servlet-class>
+  </servlet>
+ 
+</web-app>

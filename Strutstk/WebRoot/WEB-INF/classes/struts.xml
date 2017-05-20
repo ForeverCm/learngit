@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<!--解决乱码    -->
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant> 
+	
+	<package name="default" namespace="/" extends="struts-default,json-default">
+		<action name="LoginAction" method="excuteAjax" class="com.f313.action.LoginAction">
+			<result name="suc" type="json" >
+				<param name="root">res</param>
+			</result>
+		</action>
+		
+		<action name="AllFlightAction" method="allFlight" class="com.f313.action.AllFlightAction">
+			<result name="suc" type="json" >
+				<param name="root">res</param>
+			</result>
+		</action>
+		
+		<action name="CheckFlightAction" method="checkFlight" class="com.f313.action.CheckFlightAction">
+			<result name="suc" type="json" >
+				<param name="root">res</param>
+			</result>
+		</action>
+		
+		<action name="CheckSeatAction" method="checkSeat" class="com.f313.action.CheckSeatAction">
+			<result name="suc" type="json" >
+				<param name="root">res</param>
+			</result>
+		</action>
+		
+		<action name="BookSeatAction" method="bookSeat" class="com.f313.action.BookSeatAction">
+			<result name="suc" type="json" >
+				<param name="root">res</param>
+			</result>
+		</action>
+		
+		<action name="DeleteSeatAction" method="deleteSeat" class="com.f313.action.DeleteSeatAction">
+			<result name="suc" type="json" >
+				<param name="root">res</param>
+			</result>
+		</action>
+		
+		<action name="AddFlightAction" method="addFlight" class="com.f313.action.AddFlightAction">
+			<result name="suc" type="json" >
+				<param name="root">res</param>
+			</result>
+		</action>
+		
+		<action name="AddSeatAction" method="allSeat" class="com.f313.action.AllSeatAction">
+			<result name="suc" type="json" >
+				<param name="root">res</param>
+			</result>
+		</action>
+		
+		<action name="AllUserAction" method="allUser" class="com.f313.action.AllUserAction">
+			<result name="suc" type="json" >
+				<param name="root">res</param>
+			</result>
+		</action>
+		
+		<action name="AllSeatAction" method="allSeat" class="com.f313.action.AllSeatAction">
+			<result name="suc" type="json" >
+				<param name="root">res</param>
+			</result>
+		</action>
+		
+		<action name="AddUserAction" method="allUser" class="com.f313.action.AllUserAction">
+			<result name="suc" type="json" >
+				<param name="root">res</param>
+			</result>
+		</action>
+		
+		<action name="DeleteFlightAction" method="deleteFlight" class="com.f313.action.DeleteFlightAction">
+			<result name="suc" type="json" >
+				<param name="root">res</param>
+			</result>
+		</action>
+		
+		<action name="DeleteUserAction" method="deleteUser" class="com.f313.action.DeleteUserAction">
+			<result name="suc" type="json" >
+				<param name="root">res</param>
+			</result>
+		</action>
+		
+		<action name="RegisterAction" method="register" class="com.f313.action.RegisterAction">
+			<result name="suc" type="json" >
+				<param name="root">res</param>
+			</result>
+		</action>
+	</package>
+</struts>

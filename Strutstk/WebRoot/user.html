@@ -1,0 +1,444 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>js控制下拉菜单</title>
+<style type="text/css">
+*{ margin:0px; padding:0px;}
+ #menu{ background-color:#eee; width:600px; height:40px; margin:0 auto;}
+ ul{ list-style:none;}
+ ul li{ line-height:40px; text-align:center; position:relative; float: left; }
+ a{ text-decoration:none; color:#000; display:block; width:90px;}
+ a:hover{ color:#FFF; background-color:#666;}
+ ul li ul li{ float:none;margin-top:2px; background-color:#eee; } 
+ ul li ul{width:90px; position:absolute;  display: none;  }
+ 
+ .del-seat,
+ .all-flight,
+ .checkFlight,
+ .bookSeat,
+ .checkSeat,
+ .getSeatTable,
+  .direct,
+ .getFliTable{width: 600px;margin: 30px auto;}
+ 
+ .direct{ padding: 20px 20px; border: 1px solid black; box-sizing: border-box;}
+ 
+ .all-flight table,
+ .getSeatTable table,
+ .getFliTable table{ border-collapse:collapse; text-align: center;}
+ 
+ .getSeatTable table th,
+ .getSeatTable table td,
+ .all-flight table th,
+ .all-flight table td,
+ .getFliTable table th,
+ .getFliTable table td{ border: 1px solid black; padding: 5px 20px;}
+ 
+ .del-seat div,
+ .checkSeat div,
+ .checkFlight div{ padding: 20px 10px;}
+ 
+ .bookSeat div{ padding: 10px 10px;}
+ 
+  .btn-del-seat-yes,
+ .btn-chkSeat-yes,
+ .btn-chkFli-yes,
+ .btn-bookSeat-yes,
+  .del-seat .btn-no,
+ .bookSeat .btn-no,
+ .checkFlight .btn-no,
+ .checkSeat .btn-no{ margin: 0 20px; padding:2px 5px;}
+ 
+</style>
+
+<script type="text/javascript" src="./jquery-2.1.4.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(e) {
+    
+			$("#menu ul li").mouseover(function(){
+					$(this).children("ul").show();
+				});
+			$("#menu ul li").mouseout(function(){
+				$(this).children("ul").hide();
+			});
+			
+			
+			$("#allFlight").click(function(){
+				$('.block').css('display','none');
+				$('.all-flight').empty();
+				$.ajax({
+					url : "AllFlightAction",
+					type : "POST",
+					success : function(data){
+						var result = JSON.parse(data);
+						var len = result.length;
+						console.log(data);
+						
+						var _table = document.createElement("table");  
+						var _row,_th;  
+						var _cell;  
+						_th = document.createElement("tr");
+						_cell = document.createElement("th");
+						_cell.innerText = "FlightId";
+						_th.appendChild(_cell);
+						_cell = document.createElement("th");
+						_cell.innerText = "StartTime";
+						_th.appendChild(_cell);
+						_cell = document.createElement("th");
+						_cell.innerText = "StartPoint";
+						_th.appendChild(_cell);
+						_cell = document.createElement("th");
+						_cell.innerText = "Destination";
+						_th.appendChild(_cell);
+						_cell = document.createElement("th");
+						_cell.innerText = "RemainSeat";
+						_th.appendChild(_cell);
+						_cell = document.createElement("th");
+						_cell.innerText = "Price";
+						_th.appendChild(_cell);
+						_table.appendChild(_th);
+						for(var i = 0; i < len; i++){
+							_row = document.createElement("tr");  
+							_cell = document.createElement("td");  
+							_cell.innerText = result[i].flightId;  
+							_row.appendChild(_cell); 
+							
+							_cell = document.createElement("td");  
+							_cell.innerText = result[i].startTime;  
+							_row.appendChild(_cell); 
+							
+							_cell = document.createElement("td");  
+							_cell.innerText = result[i].startPoint;  
+							_row.appendChild(_cell); 
+							
+							_cell = document.createElement("td");  
+							_cell.innerText = result[i].destination;  
+							_row.appendChild(_cell); 
+							
+							_cell = document.createElement("td");  
+							_cell.innerText = result[i].remainSead;  
+							_row.appendChild(_cell); 
+							
+							_cell = document.createElement("td");  
+							_cell.innerText = result[i].price;  
+							_row.appendChild(_cell); 
+							
+							_table.appendChild(_row);
+						}
+						document.getElementsByClassName('all-flight')[0].appendChild(_table);
+						$('.all-flight').css('display','block');
+						
+					}
+				})
+			})
+			
+			$('#checkFlight').click(function(){
+				$('.block').css('display','none');
+				$('.checkFlight').css('display','block');
+				$('.checkFlight input').eq(0).val('');
+			})
+			
+				$('.btn-no').click(function(){
+				$('.block').css('display','none');
+			})
+			
+			$('.btn-chkFli-yes').click(function(){
+				$('.block').css('display','none');
+				$('.getFliTable').empty();
+				var flightId = $('.checkFlight input').eq(0).val();
+				$.ajax({
+					url: 'CheckFlightAction',
+					type: 'POST',
+					data: {
+						fid: flightId
+					},
+					success: function(res){
+						res = JSON.parse(res);
+						
+						if(res.sign == 'two'){
+							alert('请重新输入！');
+							$('.checkFlight input').eq(0).val('');
+							
+						}
+						else{
+							
+							var _table = document.createElement("table");  
+							var _row,_th;  
+							var _cell;  
+							_th = document.createElement("tr");
+							_cell = document.createElement("th");
+							_cell.innerText = "FlightId";
+							_th.appendChild(_cell);
+							_cell = document.createElement("th");
+							_cell.innerText = "StartTime";
+							_th.appendChild(_cell);
+							_cell = document.createElement("th");
+							_cell.innerText = "StartPoint";
+							_th.appendChild(_cell);
+							_cell = document.createElement("th");
+							_cell.innerText = "Destination";
+							_th.appendChild(_cell);
+							_cell = document.createElement("th");
+							_cell.innerText = "RemainSeat";
+							_th.appendChild(_cell);
+							_cell = document.createElement("th");
+							_cell.innerText = "Price";
+							_th.appendChild(_cell);
+							_table.appendChild(_th);
+							
+							_th = document.createElement("tr");
+							_cell = document.createElement("td");
+							_cell.innerText = res.flightId;
+							_th.appendChild(_cell);
+							_cell = document.createElement("td");
+							_cell.innerText = res.startTime;
+							_th.appendChild(_cell);
+							_cell = document.createElement("td");
+							_cell.innerText = res.startPoint;
+							_th.appendChild(_cell);
+							_cell = document.createElement("td");
+							_cell.innerText = res.destination;
+							_th.appendChild(_cell);
+							_cell = document.createElement("td");
+							_cell.innerText = res.remainSead;
+							_th.appendChild(_cell);
+							_cell = document.createElement("td");
+							_cell.innerText = res.price;
+							_th.appendChild(_cell);
+							_table.appendChild(_th);
+							
+							$('.getFliTable').append($(_table)).css('display','block');
+							$('.checkFlight').css('display','none');
+						}
+					}
+				})
+			})
+			
+			$('#bookSeat').click(function(){
+				$('.block').css('display','none');
+				$('.bookSeat').css('display','block');
+				$('.bookSeat input').eq(0).val('');
+				$('.bookSeat input').eq(1).val('');
+			})
+			
+				$('.btn-bookSeat-yes').click(function(){
+				var uid = $('.bookSeat input').eq(0).val();
+				var fid = $('.bookSeat input').eq(1).val();
+				if(uid == ''){
+					alert("用户Id不能为空，请输入");
+				}
+				else{
+					if(fid == ''){
+						alert("航班Id不能为空， 请输入");
+					}
+					else{
+						$.ajax({
+							url : "BookSeatAction",
+							type : "POST",
+							data :{
+								uid : uid,
+								fid : fid
+							},
+							success : function(res){
+								res = JSON.parse(res);
+								if(res.sign == "one"){
+									alert('订票成功！');
+									$('.block').css('display','none');
+								}
+								else if(res.sign == "three"){
+									alert('航班Id不存在,请重新输入！');
+									$('.bookSeat input').eq(0).val('');
+									$('.bookSeat input').eq(1).val('');
+								}
+								else if(res.sign == "four"){
+									alert('用户Id不存在,请重新输入！');
+									$('.bookSeat input').eq(0).val('');
+									$('.bookSeat input').eq(1).val('');
+								}
+								else{
+									alert('请重新输入！');
+									$('.bookSeat input').eq(0).val('');
+									$('.bookSeat input').eq(1).val('');
+								}
+							}
+						
+					})
+					
+				}
+				}
+			})
+			
+			$('#checkSeat').click(function(){
+				$('.block').css('display','none');
+				$('.checkSeat').css('display','block');
+				$('.checkSeat input').eq(0).val('');
+				$('.checkSeat input').eq(0).val('');
+			})
+			
+			$('.btn-chkSeat-yes').click(function(){
+				$('.block').css('display', 'none');
+				$('.getSeatTable').empty();
+				var uid = $('.checkSeat input').eq(0).val();
+				var fid = $('.checkSeat input').eq(1).val();
+				$.ajax({
+					url : 'CheckSeatAction',
+					type : 'POST',
+					data :{
+						uid : uid,
+						fid : fid
+					},
+					success : function(res){
+						var res = JSON.parse(res);
+						if(res.sign == 'two'){
+							alert('请重新输入！');
+							$('.checkSeat input').eq(0).val('');
+							$('.checkSeat input').eq(1).val('');
+						}
+						else{
+							var _table = document.createElement("table");  
+							var _row,_th;  
+							var _cell;  
+							_th = document.createElement("tr");
+							_cell = document.createElement("th");
+							_cell.innerText = "UserId";
+							_th.appendChild(_cell);
+							_cell = document.createElement("th");
+							_cell.innerText = "FlightId";
+							_th.appendChild(_cell);
+							_cell = document.createElement("th");
+							_cell.innerText = "State";
+							_th.appendChild(_cell);
+							_table.appendChild(_th);
+							
+							_th = document.createElement("tr");
+							_cell = document.createElement("td");
+							_cell.innerText = res.uid;
+							_th.appendChild(_cell);
+							_cell = document.createElement("td");
+							_cell.innerText = res.fid;
+							_th.appendChild(_cell);
+							_cell = document.createElement("td");
+							_cell.innerText = res.state;
+							_th.appendChild(_cell);
+							_table.appendChild(_th);
+							
+							$('.getSeatTable').append($(_table)).css('display','block');
+							$('.checkSeat').css('display','none');
+							
+						}
+					}
+				})
+				
+			})
+			
+			$("#deleteSeat").click(function(){
+				$('.block').css('display','none');
+				$('.del-seat input').eq(0).val('');
+				$('.del-seat input').eq(1).val('');
+				$('.del-seat').css('display','block');
+			})
+			$('.btn-del-seat-yes').click(function(){
+				var uid = $('.del-seat input').eq(0).val();
+				var fid = $('.del-seat input').eq(1).val();
+				$.ajax({
+					url : 'DeleteSeatAction',
+					tyep : 'POST',
+					data : {
+						uid : uid,
+						fid : fid
+					},
+					success : function(res){
+						res = JSON.parse(res);
+						if(res.sign == 'two'){
+							alert('请重新输入！');
+							$('.del-seat input').eq(0).val('');
+							$('.del-seat input').eq(1).val('');
+						}
+						else{
+							alert('删除成功！');
+							$('.block').css('display','none');
+						}
+					}
+				})
+			})
+			
+				
+			$('#direct').click(function(){
+				$('.block').css('display','none');
+				$('.direct').css('display','block');
+			})
+			
+  });
+</script>
+</head>
+
+<body>
+
+<div id="menu">
+<ul>
+  <li><a href="#">航班信息</a>
+    <ul>
+        <li id="allFlight"><a href="#">所有航班</a></li>
+        <li id="checkFlight"><a href="#">查询航班</a></li>
+    </ul>
+  </li>
+  <li><a href="#">票务信息</a>
+    <ul>
+      <li id="checkSeat"><a href="#">查票</a></li>
+      <li id="bookSeat"><a href="#">订票</a></li>
+      <li id="deleteSeat"><a href="#">退票</a></li>
+    </ul>
+  </li>
+  <li ><a href="#">系统帮助</a>
+  	<ul>
+  	  <li id="direct"><a href="#">功能介绍</a></li>
+  	</ul>
+  </li>
+</ul>
+</div> 
+
+
+<div class="all-flight block"></div>
+<div class="checkFlight block" style="display: none;">
+	请输入待查询航班Id：<input type="text" />
+	<div>
+		<button class="btn-chkFli-yes">确定</button>
+		<button class="btn-no">取消</button>
+	</div>
+</div>
+<div class="getFliTable block" style="display: none;"></div>
+<div class="bookSeat block" style="display: none;">
+	<div>用户Id：<input type="text"/></div>
+	<div>航班Id：<input type="text"/></div>
+	<div>
+		<button class="btn-bookSeat-yes">确定</button>
+		<button class="btn-no">取消</button>
+	</div>
+</div>
+
+<div class="checkSeat block" style="display: none;">
+    <div>请输入待查询用户Id：<input type="text" /></div>
+	<div>请输入待查询航班Id：<input type="text" /></div>
+	<div>
+		<button class="btn-chkSeat-yes">确定</button>
+		<button class="btn-no">取消</button>
+	</div>
+</div>
+<div class="getSeatTable block" style="display: none;"></div>
+
+<div class="del-seat block" style="display: none;">
+	<div>请输入退票用户Id：<input type="text" /></div>
+	<div>请输入退票航班Id：<input type="text" /></div>
+	<div>
+		<button class="btn-del-seat-yes">确定</button>
+		<button class="btn-no">取消</button>
+	</div>
+</div>
+<div class="direct block" style="display: none;">
+	<p>wetqwe</p>
+	<p>dafsdfad</p>
+</div>
+
+</body>
+</html>
